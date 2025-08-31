@@ -1,7 +1,6 @@
 import express from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
-import rateLimit from 'express-rate-limit';
 import winston from 'winston';
 import fs from 'fs/promises';
 import path from 'path';
@@ -32,12 +31,6 @@ const logger = winston.createLogger({
 const app = express();
 const port = process.env.PORT || 3001;
 
-// Trust proxy configuration - dynamic based on environment
-// Set TRUST_PROXY environment variable to control proxy trust level
-// Examples: "true" (trust all), "2" (trust 2 hops), "127.0.0.1" (trust specific IP)
-const trustProxy = process.env.TRUST_PROXY || '2';
-app.set('trust proxy', isNaN(trustProxy) ? trustProxy : parseInt(trustProxy));
-
 // Security middleware
 app.use(helmet({
     contentSecurityPolicy: {
@@ -55,19 +48,7 @@ app.use(cors({
     credentials: true
 }));
 
-// Rate limiting
-const limiter = rateLimit({
-    windowMs: 15 * 60 * 1000, // 15 minutes
-    max: process.env.RATE_LIMIT_MAX || 100, // Limit each IP to 100 requests per windowMs
-    message: {
-        status: 'error',
-        message: 'Too many requests from this IP, please try again later.'
-    },
-    standardHeaders: true,
-    legacyHeaders: false
-});
 
-app.use(limiter);
 
 // JSON body parsing middleware
 app.use(express.json({ limit: '10mb' }));
@@ -95,12 +76,6 @@ const specs = {
             url: 'https://opensource.org/licenses/MIT'
             }
         },
-        servers: [
-            {
-                url: `http://localhost:${port}`,
-                description: 'Development server'
-            }
-        ],
     paths: {
         '/parse': {
             post: {

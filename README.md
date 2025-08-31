@@ -10,7 +10,7 @@ A high-performance web scraping API built with Node.js, Express, and Puppeteer f
 - **📸 Screenshot Capture**: Full-page or viewport screenshots with customizable options
 - **🌐 Network Monitoring**: Request filtering, blocking, and detailed network analysis
 - **💾 Data Persistence**: Optional saving of parsed data for later analysis
-- **🛡️ Security**: Rate limiting, CORS, security headers, and comprehensive input validation
+- **🛡️ Security**: CORS, security headers, and comprehensive input validation
 - **📚 API Documentation**: Interactive Swagger/OpenAPI documentation
 - **📊 Monitoring**: Detailed logging with Winston and execution metrics
 - **🐳 Docker Ready**: Complete containerization support
@@ -271,8 +271,7 @@ NODE_ENV=development
 # Logging
 LOG_LEVEL=info
 
-# Rate Limiting (requests per 15 minutes)
-RATE_LIMIT_MAX=100
+
 
 # CORS Configuration
 ALLOWED_ORIGINS=http://localhost:3000,http://localhost:3001
@@ -297,7 +296,7 @@ The browser pool maintains up to 3 concurrent browser instances for optimal perf
 
 ### Security Features
 
-- **Rate Limiting**: 100 requests per 15 minutes per IP (configurable)
+
 - **Input Validation**: Comprehensive JSON schema validation with Joi
 - **Security Headers**: Helmet.js for security header management
 - **CORS**: Configurable cross-origin resource sharing
@@ -445,7 +444,7 @@ All errors follow consistent format with:
 - **Validation**: Joi v17.13.3
 - **Logging**: Winston v3.17.0
 - **Documentation**: Swagger UI Express v5.0.1
-- **Security**: Helmet, CORS, Express Rate Limit
+- **Security**: Helmet, CORS
 
 ## 🚀 Deployment
 
@@ -541,8 +540,7 @@ Bypass bot detection with stealth mode and proxy rotation:
 
 For high-volume usage:
 ```bash
-# Increase rate limits
-RATE_LIMIT_MAX=500
+
 
 # Optimize browser pool (max 3 recommended)
 # Adjust timeout for faster sites
@@ -570,8 +568,7 @@ NODE_ENV=production
 # Restrict CORS origins
 ALLOWED_ORIGINS=https://yourdomain.com
 
-# Lower rate limits for public APIs
-RATE_LIMIT_MAX=50
+
 
 # Enable detailed logging
 LOG_LEVEL=debug
@@ -598,7 +595,7 @@ LOG_LEVEL=debug
 - Puppeteer: 24.1.0 → 24.17.1
 - Puppeteer Core: 24.1.0 → 24.17.1
 - CycleTLS: 1.0.27 → 2.0.4
-- Added: CORS, Helmet, Rate Limiting, Joi, Winston, Swagger tools
+- Added: CORS, Helmet, Joi, Winston, Swagger tools
 
 ## 🤝 Contributing
 
@@ -634,7 +631,7 @@ ISC
 1. **Chrome Dependencies**: Use Docker for consistent environment
 2. **Memory Usage**: Monitor browser pool and implement cleanup
 3. **Proxy Issues**: Check credentials and network connectivity
-4. **Rate Limiting**: Adjust `RATE_LIMIT_MAX` for your use case
+
 
 ### Debug Information
 

@@ -32,6 +32,12 @@ const logger = winston.createLogger({
 const app = express();
 const port = process.env.PORT || 3001;
 
+// Trust proxy configuration - dynamic based on environment
+// Set TRUST_PROXY environment variable to control proxy trust level
+// Examples: "true" (trust all), "2" (trust 2 hops), "127.0.0.1" (trust specific IP)
+const trustProxy = process.env.TRUST_PROXY || '2';
+app.set('trust proxy', isNaN(trustProxy) ? trustProxy : parseInt(trustProxy));
+
 // Security middleware
 app.use(helmet({
     contentSecurityPolicy: {
@@ -82,8 +88,7 @@ const specs = {
             description: 'A web scraping API powered by Puppeteer with stealth capabilities',
             contact: {
             name: 'API Support',
-            url: 'https://github.com',
-            email: 'support@example.com'
+            url: 'https://github.com/w95/parser-api'
         },
         license: {
             name: 'MIT',

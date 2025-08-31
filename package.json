@@ -1,0 +1,45 @@
+{
+  "name": "parser-api",
+  "type": "module",
+  "version": "2.0.0",
+  "description": "",
+  "main": "server.mjs",
+  "scripts": {
+    "start": "node server.mjs",
+    "dev": "nodemon server.mjs"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "cycletls": "^2.0.4",
+    "express": "^4.21.2",
+    "express-rate-limit": "^7.4.1",
+    "helmet": "^8.0.0",
+    "joi": "^17.13.3",
+    "puppeteer": "^24.17.1",
+    "puppeteer-core": "^24.17.1",
+    "puppeteer-extra": "^3.3.6",
+    "puppeteer-extra-plugin-adblocker": "^2.13.6",
+    "puppeteer-extra-plugin-stealth": "^2.11.2",
+    "puppeteer-real-browser": "^1.4.3",
+    "swagger-jsdoc": "^7.0.0-rc.6",
+    "swagger-ui-express": "^5.0.1",
+    "winston": "^3.17.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.7"
+  },
+  "overrides": {
+    "glob": "^7.2.3",
+    "z-schema": "^6.0.2",
+    "lodash.get": "npm:lodash@^4.17.21",
+    "lodash.isequal": "npm:lodash@^4.17.21",
+    "rimraf": "^5.0.10",
+    "@cliqz/adblocker": "npm:@ghostery/adblocker@latest",
+    "@cliqz/adblocker-content": "npm:@ghostery/adblocker-content@latest",
+    "@cliqz/adblocker-puppeteer": "npm:@ghostery/adblocker-puppeteer@latest",
+    "@cliqz/adblocker-extended-selectors": "npm:@ghostery/adblocker-extended-selectors@latest"
+  }
+}

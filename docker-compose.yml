@@ -1,0 +1,15 @@
+services:
+  parser-api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: parser-api
+    restart: always
+    ports:
+      - 3001:3001
+    env_file:
+      - .env
+    volumes:
+      - ./data:/app/data
+      - ./logs/error.log:/app/error.log
+      - ./logs/combined.log:/app/combined.log

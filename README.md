@@ -8,7 +8,7 @@ A high-performance web scraping API built with Node.js, Express, and Puppeteer f
 - **🏊 Browser Pooling**: Efficient browser instance management with up to 3 concurrent browsers
 - **🔀 Advanced Proxy Support**: Static and hybrid proxy modes with automatic fallback
 - **📸 Screenshot Capture**: Full-page or viewport screenshots with customizable options
-- **🌐 Network Monitoring**: Request filtering, blocking, and detailed network analysis
+- **🌐 Network Monitoring**: Request filtering, blocking, detailed network analysis, and source code capture
 - **💾 Data Persistence**: Optional saving of parsed data for later analysis
 - **🛡️ Security**: CORS, security headers, and comprehensive input validation
 - **📚 API Documentation**: Interactive Swagger/OpenAPI documentation
@@ -92,6 +92,7 @@ Parse a web page and extract content with advanced configuration options includi
   },
   "network": {
     "enabled": "boolean (default: false)",
+    "show_code": "boolean (default: false)",
     "block_urls": "array of strings (default: [])",
     "allow_types": "array of strings (default: [])",
     "wait_until": "string (default: 'networkidle0')"
@@ -125,6 +126,36 @@ Parse a web page and extract content with advanced configuration options includi
 - `networkidle0` - Wait until there are no network connections for at least 500ms
 - `networkidle2` - Wait until there are no more than 2 network connections for at least 500ms
 
+### Source Code Capture (for `show_code`)
+
+When `show_code` is enabled (requires `network.enabled: true`), the API captures the actual content of text-based network files:
+
+**Supported Text Files:**
+- **JavaScript**: `.js`, `.mjs`, `.ts`, `.jsx`, `.tsx`
+- **Stylesheets**: `.css`, `.scss`, `.sass`, `.less`
+- **Documents**: `.html`, `.htm`, `.xhtml`, `.xml`
+- **Data Files**: `.json`, `.txt`, `.csv`, `.md`, `.svg`
+
+**Excluded Binary Files:**
+- Images (PNG, JPG, GIF, WebP, etc.)
+- Videos (MP4, WebM, AVI, etc.)
+- Audio (MP3, WAV, OGG, etc.)
+- Fonts and PDFs
+
+**Enhanced Network Response:**
+```json
+{
+  "method": "GET",
+  "type": "script",
+  "url": "https://example.com/app.js",
+  "content": "function myApp() { ... }",
+  "content_type": "application/javascript",
+  "size": 1234,
+  "blocked": false,
+  "reason": "allowed"
+}
+```
+
 ### Proxy Modes
 
 - **Static**: Always use the configured proxy
@@ -151,6 +182,7 @@ curl -X POST http://localhost:3001/parse \
     },
     "network": {
       "enabled": true,
+      "show_code": true,
       "block_urls": ["ads.example.com", "analytics"],
       "allow_types": ["document", "script", "stylesheet", "xhr"],
       "wait_until": "networkidle0"
@@ -201,6 +233,9 @@ curl -X POST http://localhost:3001/parse \
         "headers": {
           "user-agent": "Mozilla/5.0..."
         },
+        "content": "<!doctype html><html><head><title>Example Domain</title>...",
+        "content_type": "text/html; charset=utf-8",
+        "size": 1256,
         "blocked": false,
         "reason": "document_allowed"
       }
@@ -517,6 +552,21 @@ Monitor and analyze network requests for performance auditing:
 }
 ```
 
+### Source Code Analysis
+Extract and analyze JavaScript, CSS, and HTML source code from web applications:
+```json
+{
+  "url": "https://webapp.example.com",
+  "network": {
+    "enabled": true,
+    "show_code": true,
+    "allow_types": ["document", "script", "stylesheet"],
+    "block_urls": ["analytics", "ads", "tracking"]
+  },
+  "save": true
+}
+```
+
 ### Anti-Detection Scraping
 Bypass bot detection with stealth mode and proxy rotation:
 ```json
@@ -578,6 +628,7 @@ LOG_LEVEL=debug
 
 ### New Features
 - **Advanced Proxy Support**: Static and hybrid proxy modes
+- **Source Code Capture**: Extract JavaScript, CSS, HTML, and other text-based files with `show_code: true`
 - **Data Persistence**: Save complete parsing results with `save: true`
 - **Enhanced Validation**: Comprehensive JSON schema validation
 - **Network Filtering**: Granular control over resource loading

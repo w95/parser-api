@@ -92,6 +92,7 @@ const specs = {
 **🌐 Network Monitoring Cases:**
 - \`network.enabled: false\` (default): No network monitoring, fastest response
 - \`network.enabled: true\`: Monitor all requests, includes response data
+- \`network: { enabled: true, show_code: true }\`: Monitor requests + capture code content for text files (JS, CSS, HTML)
 - \`network: { enabled: false, block_urls: [...] }\`: Block ads/trackers without monitoring
 - \`network: { enabled: true, allow_types: ["document", "script"] }\`: Monitor + filter resource types
 - \`network: { enabled: false, wait_until: "networkidle2" }\`: Wait for stability without monitoring
@@ -158,6 +159,7 @@ const specs = {
                                         type: 'object',
                                         properties: {
                                             enabled: { type: 'boolean', default: false },
+                                            show_code: { type: 'boolean', default: false },
                                             block_urls: { type: 'array', items: { type: 'string' } },
                                             allow_types: { type: 'array', items: { type: 'string' } },
                                             wait_until: { type: 'string', enum: ['load', 'domcontentloaded', 'networkidle0', 'networkidle2'] }
@@ -209,6 +211,7 @@ const specs = {
                                         },
                                         network: {
                                             enabled: true,
+                                            show_code: true,
                                             block_urls: ['ads.example.com', 'analytics', 'facebook.com/tr'],
                                             allow_types: ['document', 'script', 'stylesheet', 'xhr', 'fetch'],
                                             wait_until: 'networkidle0'
